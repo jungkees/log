@@ -74,7 +74,7 @@
   
     <section>
   <h1>About Me</h1>
-  <p>Hello, I&#8217;m Jungkee Song, a senior software engineer at Samsung Electronics; and I&#8217;m an editor of web standards. Currently I&#8217;m doing my best to spare more time on the open web stuff as I&#8217;m all for the <a href="http://extensiblewebmanifesto.org/">#extendthewebforward</a>!</p>
+  <p>Hello, I&#8217;m Jungkee Song, a senior software engineer at Samsung Electronics; and I&#8217;m an editor of web standards. Currently I&#8217;m doing my best to spare more time on the open web stuffs as I&#8217;m all for the <a href="http://extensiblewebmanifesto.org/">#extendthewebforward</a>!</p>
   <p>Promise.resolve(openWeb).then(extend)</p>
 </section>
 <section>
@@ -84,6 +84,21 @@
   </ul>
 </section>
 
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      getTwitterFeed("jungkees", , );
+    });
+  </script>
+  <script src="/log/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <p>Follow <a href="http://twitter.com/jungkees">@jungkees</a></p>
+  
+</section>
 
 
 
@@ -104,6 +119,14 @@
 
 
 
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
 
 
 
