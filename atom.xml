@@ -4,7 +4,7 @@
   <title><![CDATA[Jungkee Song]]></title>
   <link href="http://jungkees.github.io/log/atom.xml" rel="self"/>
   <link href="http://jungkees.github.io/log/"/>
-  <updated>2014-01-08T22:48:23+09:00</updated>
+  <updated>2014-01-09T02:40:30+09:00</updated>
   <id>http://jungkees.github.io/log/</id>
   <author>
     <name><![CDATA[Jungkee Song]]></name>
@@ -12,5 +12,113 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Octopress with your github project pages]]></title>
+    <link href="http://jungkees.github.io/log/blog/2014/01/09/octopress-with-your-github-project-pages/"/>
+    <updated>2014-01-09T02:16:19+09:00</updated>
+    <id>http://jungkees.github.io/log/blog/2014/01/09/octopress-with-your-github-project-pages</id>
+    <content type="html"><![CDATA[<p>You can build your blog on your own github <strong>project</strong> repository using <a href="http://octopress.org">Octopress</a>. Here&rsquo;s the <a href="http://octopress.org/docs/setup/">instruction</a> how to set it up. While you&rsquo;d find most of the things there, there&rsquo;s a thing you need to take care of if you intend to get it done with your <strong>project</strong> pages (gh-pages) rather than with the <strong>user</strong> pages (&lt;username>.github.io).</p>
+
+<h4>Clone the Octopress and install dependencies</h4>
+
+<p>(Ruby >1.9.3 required)</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ git clone https://github.com/imathis/octopress.git
+</span><span class='line'>$ cd octopress
+</span><span class='line'>$ sudo gem install bundler
+</span><span class='line'>$ bundle install</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Install a theme</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rake install</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Check <a href="http://opthemes.com/">here</a> if you want to find some additional themes instead of the default one.</p>
+
+<h4>Deploy to github project pages</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rake setup_github_pages</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You&rsquo;ll be asked for the url of the github repository. Just enter <code>https://github.com/&lt;username&gt;/&lt;project&gt;.git</code></p>
+
+<p>(If you&rsquo;d tried deploying to your <code>&lt;username&gt;.github.io</code>, the following two steps would have NOT been required.)</p>
+
+<h4>Add remote origin</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ git remote add origin https://github.com/&lt;username&gt;/&lt;project&gt;.git
+</span><span class='line'>$ git config branch.master.remote origin</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Correct things manually</h4>
+
+<p>Open <code>_config.yml</code>. You might see the string <code>/github</code> for the properties <code>url</code>, <code>subscribe_rss</code>, <code>root</code>, <code>destination</code>. E.g. <code>url: http://&lt;username&gt;.github.io//github</code>.</p>
+
+<p>Change them to the project name of your actual repository. Here&rsquo;s mine (for <code>https://github.com/jungkees/log.git</code>):</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>url: http://jungkees.github.io/log
+</span><span class='line'>subscribe_rss: /log/atom.xml
+</span><span class='line'>root: /log
+</span><span class='line'>destination: public/log</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Open <code>config.rb</code> and do the same (<code>/github</code> to <code>/&lt;project&gt;</code>).
+I got this after changing them:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>http_path = "/log/"
+</span><span class='line'>http_images_path = "/log/images"
+</span><span class='line'>http_fonts_path = "/log/fonts"
+</span><span class='line'>css_dir = "public/log/stylesheets"</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Open <code>Rakefile</code> and change <code>public_dir = "public/github"</code> to <code>public_dir = "public/&lt;project&gt;"</code>.</p>
+
+<p>Before you go to the next step, find the directory <code>public/github</code> and change it to <code>public/&lt;project&gt;</code>. Now it seems you are ready to generate the blog.</p>
+
+<h4>Generate and deploy</h4>
+
+<p>Run these commands:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rake generate
+</span><span class='line'>$ rake deploy</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The generate command creates the blog at <code>public/&lt;project&gt;</code> and deploy command move the blog to <code>_deploy</code> directory and push the content to github. (<code>gh-pages</code> branch is used automatically.)</p>
+
+<h3>Push the source code</h3>
+
+<p>Lastly, push the entire blog assets to github. With the <strong>project</strong> pages, the branch is <code>master</code> by default. Thus, it will be like:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ git add .
+</span><span class='line'>$ git commit -m "Update the source"
+</span><span class='line'>$ git push origin master</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Alright. You&rsquo;ve done it. Here&rsquo;s the Octopress <a href="http://octopress.org/docs/blogging/">tutorial</a> for the blog posts. Enjoy your posting in beautiful markdown!</p>
+]]></content>
+  </entry>
   
 </feed>
